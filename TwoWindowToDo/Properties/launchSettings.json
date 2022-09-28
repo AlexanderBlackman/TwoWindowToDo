@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TwoWindowToDo (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TwoWindowToDo (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}

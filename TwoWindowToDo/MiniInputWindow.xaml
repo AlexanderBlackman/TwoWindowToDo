@@ -1,0 +1,39 @@
+﻿<winex:WindowEx
+    x:Class="TwoWindowToDo.MiniInputWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TwoWindowToDo"
+    xmlns:winex="using:WinUIEx"
+    xmlns:g="using:AK.Toolkit.WinUI3.GridExtensions"
+    xmlns:tk="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Height="30"
+    Width="500">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*" MinWidth="200"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+           
+<!--Maybe try having a markdowntblock behind, and make it opaque-->
+
+            <Grid Grid.Row="1">
+                <tk:MarkdownTextBlock Text="{x:Bind ViewModel.TopTodo.Title, Mode=TwoWay}"/>
+                 <TextBox x:Name="TaskInputTextBox"
+                     Margin="0,1" Height="10"  MinWidth="200" FontSize="18" Padding="2"
+                     LosingFocus="TextBox_LosingFocus"
+                     FocusEngaged="TaskInputTextBox_FocusEngaged"
+                     />
+            </Grid>
+        </Grid>
+
+    </Grid>
+</winex:WindowEx>
