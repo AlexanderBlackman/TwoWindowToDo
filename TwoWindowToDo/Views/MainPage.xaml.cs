@@ -25,20 +25,30 @@ namespace TwoWindowToDo.Views
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public MainPageViewModel ViewModel { get; }
         public MainPage()
         {
             InitializeComponent();
            // RunGridIndexer();
             ViewModel = Ioc.Default.GetService<MainPageViewModel>();
             rootGrid.Loaded += RootGrid_Loaded;
+            this.Unloaded += MainPage_Unloaded;
 
+
+        }
+
+        private void MainPage_Unloaded(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
         }
 
         private void RootGrid_Loaded(object sender, RoutedEventArgs e)
         {
             ViewModel.LoadAsync();
         }
+        
+        
 
-        public MainPageViewModel ViewModel { get; }
+        
     }
 }

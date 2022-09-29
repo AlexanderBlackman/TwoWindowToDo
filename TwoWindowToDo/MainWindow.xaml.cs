@@ -1,4 +1,5 @@
-﻿using Microsoft.UI.Xaml;
+﻿using CommunityToolkit.Mvvm.DependencyInjection;
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Data;
@@ -10,6 +11,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TwoWindowToDo.ViewModels;
 using TwoWindowToDo.Views;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -25,12 +27,27 @@ namespace TwoWindowToDo
     /// </summary>
     public sealed partial class MainWindow : WindowEx
     {
+        public MainPageViewModel ViewModel{get;}
         public MainWindow()
         {
             this.InitializeComponent();
             App.rootFrame = rootFrame;
+            this.ViewModel = Ioc.Default.GetService<MainPageViewModel>();
             rootFrame.Content = new MainPage();
+            this.Closed += MainWindow_Closed;
         }
+
+        private async void MainWindow_Closed(object sender, WindowEventArgs args)
+        {
+            await ViewModel.SaveAsync();
+        }
+
+
+
+
+
+
+
 
     }
 }

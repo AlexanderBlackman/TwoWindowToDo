@@ -33,7 +33,13 @@ namespace TwoWindowToDo
         {
             this.InitializeComponent();
             this.ViewModel = Ioc.Default.GetService<MainPageViewModel>();
-            this.IsTitleBarVisible = false;
+            //this.IsTitleBarVisible = false;
+            ExtendsContentIntoTitleBar = true;
+            
+
+
+
+
             IsMaximizable = false;
             IsMinimizable = false;
             IsAlwaysOnTop = true;
@@ -55,5 +61,7 @@ namespace TwoWindowToDo
         {
             //TaskInputTextBox.Opacity = 1;
         }
+
+        
     }
 }

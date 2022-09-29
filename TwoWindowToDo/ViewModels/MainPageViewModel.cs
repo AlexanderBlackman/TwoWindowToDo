@@ -1,10 +1,12 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using TwoWindowToDo.Contracts;
 using TwoWindowToDo.Model;
 using Windows.ApplicationModel.Email.DataProvider;
@@ -42,9 +44,24 @@ namespace TwoWindowToDo.ViewModels
             }
             TopTodo = TodoItems[0];
         }
+        [RelayCommand]
+        public async Task SaveAsync()
+        {
+            var todoItems = new List<TodoItem>();
+            foreach (var todoItem in TodoItems)
+            {
+                todoItems.Add(todoItem.ToModel());
+            }
+            await dataProvider.SaveDataAsync(todoItems);
+        }
 
+
+
+
+        
         public void AddTodo()
         {
+            if (string.IsNullOrWhiteSpace(newTodoTitle)) return;
             var newTodo = new TodoItemViewModel(new TodoItem { Title = newTodoTitle, Urgent = newIsUrgent });
             TodoItems.Add(newTodo);
             selectedTodo = newTodo;

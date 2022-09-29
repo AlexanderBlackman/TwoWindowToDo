@@ -8,8 +8,8 @@ namespace TwoWindowToDo.Model
 {
     public class TodoItem
     {
-        public string Title;
-        public string Content = String.Empty;
-        public bool Urgent;
+        public string Title { get; set; }
+        public string Content { get; set; } = String.Empty;
+        public bool Urgent { get; set; } = false;
     }
 }

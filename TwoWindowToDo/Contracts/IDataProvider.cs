@@ -12,5 +12,6 @@ namespace TwoWindowToDo.Contracts
         //Change TodoItem to a generic type
 
         Task<IEnumerable<TodoItem>> GetDataAsync();
+        Task SaveDataAsync(IEnumerable<TodoItem> TodoItems);
     }
 }
