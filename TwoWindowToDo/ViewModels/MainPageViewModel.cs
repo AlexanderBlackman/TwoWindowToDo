@@ -19,12 +19,17 @@ namespace TwoWindowToDo.ViewModels
         private readonly IDataProvider dataProvider;
         public string newTodoTitle { get; set; }
         public bool newIsUrgent { get; set; } = false;
+        
         public ObservableCollection<TodoItemViewModel> TodoItems { get; } = new();
+        public ObservableCollection<TodoItemViewModel> CompletedTodos { get; } = new();
         
         [ObservableProperty]
         public TodoItemViewModel selectedTodo;
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(MarkCompletedCommand))]
         public TodoItemViewModel topTodo;
+
+        public bool IsTopTodoNotNull() => (TopTodo is not null);
 
 
         public MainPageViewModel(IDataProvider dataProvider)
@@ -56,7 +61,21 @@ namespace TwoWindowToDo.ViewModels
         }
 
 
-
+        [RelayCommand(CanExecute = nameof(IsTopTodoNotNull))]
+        void MarkCompleted()
+        {
+            CompletedTodos.Add(TopTodo);
+            TodoItems.Remove(TopTodo);
+            if (TodoItems.Any())
+            {
+                TopTodo = TodoItems[0];
+            }
+            else
+            {
+                TodoItems.Add(new TodoItemViewModel(new TodoItem{ Title = "Add more tasks" }) );
+                TopTodo = TodoItems[0];
+            }
+        }
 
         
         public void AddTodo()
@@ -70,6 +89,15 @@ namespace TwoWindowToDo.ViewModels
         public void DeleteTodo()
         {
             TodoItems.Remove(selectedTodo);
+            if (TodoItems.Any())
+            {
+                TopTodo = TodoItems[0];
+            }
+            else
+            {
+                TodoItems.Add(new TodoItemViewModel(new TodoItem { Title = "Add more tasks" }));
+                TopTodo = TodoItems[0];
+            }
         }
     }
 }

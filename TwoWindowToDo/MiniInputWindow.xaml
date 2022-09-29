@@ -9,12 +9,12 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Height="30"
+    Height="25"
     Width="500">
 
-    <Grid>
+    <Grid Background="Transparent" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
+            <RowDefinition  />
         </Grid.RowDefinitions>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -25,15 +25,26 @@
            
 <!--Maybe try having a markdowntblock behind, and make it opaque-->
             
-            <Grid Grid.Column="1">
-                <tk:MarkdownTextBlock Text="{x:Bind ViewModel.TopTodo.Title, Mode=TwoWay}"/>
+            <Grid Grid.Column="1" Margin="0 0">
+                <tk:MarkdownTextBlock Text="{x:Bind ViewModel.TopTodo.Title, Mode=TwoWay}" 
+                                      FontSize="18"
+                                      VerticalAlignment="Center"
+                                      Padding="5 0"/>
                  <TextBox x:Name="TaskInputTextBox"
-                     Margin="0,1" Height="10"  MinWidth="200" FontSize="18" Padding="2"
+                       VerticalAlignment="Center"   
+                     Margin="0,1" Height="10"  MinWidth="200" FontSize="18"
                      LosingFocus="TextBox_LosingFocus"
-                     
+                     Padding="5 0"
                      FocusEngaged="TaskInputTextBox_FocusEngaged"
                      />
             </Grid>
+            <StackPanel Orientation="Horizontal" Grid.Column="2">
+                                <AppBarButton Icon="Accept"  Width="20" Height="30" Margin="10 -3"
+                              Command="{x:Bind ViewModel.MarkCompletedCommand}"/>
+                <AppBarButton Content="➡️" Grid.Column="2" Width="20" Height="30" Margin="10 -3"
+                              Command="{x:Bind ViewModel.MarkCompletedCommand}"/>
+            </StackPanel>
+
         </Grid>
 
     </Grid>
