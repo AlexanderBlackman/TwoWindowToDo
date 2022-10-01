@@ -22,7 +22,9 @@ namespace TwoWindowToDo.ViewModels
         
         public ObservableCollection<TodoItemViewModel> TodoItems { get; } = new();
         public ObservableCollection<TodoItemViewModel> CompletedTodos { get; } = new();
-        
+
+        public ObservableQueue<TodoItemViewModel> TodoQueue { get; } = new();
+
         [ObservableProperty]
         public TodoItemViewModel selectedTodo;
         [ObservableProperty]
@@ -36,7 +38,7 @@ namespace TwoWindowToDo.ViewModels
         {
             this.dataProvider = dataProvider;
         }
-        
+
         public async Task LoadAsync()
         {
             if (TodoItems.Any()) return;
@@ -49,6 +51,19 @@ namespace TwoWindowToDo.ViewModels
             }
             TopTodo = TodoItems[0];
         }
+
+        //public async Task LoadAsync()
+        //{
+        //    if (TodoQueue.Any()) return;
+
+        //    var todoItems = await dataProvider.GetDataAsync();
+        //    if (todoItems is null) return;
+        //    foreach (var todoItem in todoItems)
+        //    {
+        //        TodoQueue.Enqueue(new TodoItemViewModel(todoItem));
+        //    }
+        //    TopTodo = TodoQueue.Peek();
+        //}
         [RelayCommand]
         public async Task SaveAsync()
         {
@@ -65,39 +80,59 @@ namespace TwoWindowToDo.ViewModels
         void MarkCompleted()
         {
             CompletedTodos.Add(TopTodo);
-            TodoItems.Remove(TopTodo);
-            if (TodoItems.Any())
-            {
-                TopTodo = TodoItems[0];
-            }
-            else
-            {
-                TodoItems.Add(new TodoItemViewModel(new TodoItem{ Title = "Add more tasks" }) );
-                TopTodo = TodoItems[0];
-            }
-        }
-
-        
-        public void AddTodo()
-        {
-            if (string.IsNullOrWhiteSpace(newTodoTitle)) return;
-            var newTodo = new TodoItemViewModel(new TodoItem { Title = newTodoTitle, Urgent = newIsUrgent });
-            TodoItems.Add(newTodo);
-            selectedTodo = newTodo;
-        }
-
-        public void DeleteTodo()
-        {
-            TodoItems.Remove(selectedTodo);
-            if (TodoItems.Any())
-            {
-                TopTodo = TodoItems[0];
-            }
+            TodoItems.RemoveAt(0);
+            if (TodoItems.Any()) { ; }
             else
             {
                 TodoItems.Add(new TodoItemViewModel(new TodoItem { Title = "Add more tasks" }));
                 TopTodo = TodoItems[0];
             }
+
+            //TodoQueue.Dequeue();
+            //if (TodoQueue.Any())
+            //{
+            //    TopTodo = TodoQueue.Peek();
+            //}
+            //else
+            //{
+            //    TodoQueue.Enqueue(new TodoItemViewModel(new TodoItem { Title = "Add more tasks" }));
+            //    TopTodo = TodoQueue.Peek();
+            //}
+        }
+
+        [RelayCommand]
+        void SkipTodo()
+        {
+            //var temp = TodoQueue.Dequeue();
+            //TodoQueue.Enqueue(temp);
+            //TopTodo = TodoQueue.Peek();
+            var temp = TodoItems[0];
+            TodoItems.RemoveAt(0);
+            TodoItems.Add(temp);
+            TopTodo = TodoItems[0];
+        }
+        
+        public void AddTodo()
+        {
+            if (string.IsNullOrWhiteSpace(newTodoTitle)) return;
+            var newTodo = new TodoItemViewModel(new TodoItem { Title = newTodoTitle });
+            //TodoQueue.Enqueue(newTodo);
+            TodoItems.Add(newTodo);
+            //selectedTodo = newTodo;
+        }
+
+        public void DeleteTodo()
+        {
+            //TodoQueue.Dequeue(selectedTodo);
+            //if (TodoQueue.Any())
+            //{
+            //    TopTodo = TodoItems[0];
+            //}
+            //else
+            //{
+            //    TodoItems.Add(new TodoItemViewModel(new TodoItem { Title = "Add more tasks" }));
+            //    TopTodo = TodoItems[0];
+            //}
         }
     }
 }

@@ -28,6 +28,7 @@ namespace TwoWindowToDo
     public sealed partial class MainWindow : WindowEx
     {
         public MainPageViewModel ViewModel{get;}
+        private Window inputWindow { get; }
         public MainWindow()
         {
             this.InitializeComponent();
@@ -35,13 +36,17 @@ namespace TwoWindowToDo
             this.ViewModel = Ioc.Default.GetService<MainPageViewModel>();
             rootFrame.Content = new MainPage();
             this.Closed += MainWindow_Closed;
+            inputWindow = new MiniInputWindow();
+            inputWindow.Activate();
+
+
         }
 
         private async void MainWindow_Closed(object sender, WindowEventArgs args)
         {
             await ViewModel.SaveAsync();
+            inputWindow.Close();
         }
-
 
 
 

@@ -71,13 +71,13 @@ namespace TwoWindowToDo
         {
             m_window = new MainWindow();
             m_window.Activate();
-            inputWindow = new MiniInputWindow();
-            inputWindow.Activate();
+            //inputWindow = new MiniInputWindow();
+            //inputWindow.Activate();
         }
 
         public static Frame rootFrame { get; set; }
 
         private Window m_window;
-        private Window inputWindow;
+        //private Window inputWindow;
     }
 }

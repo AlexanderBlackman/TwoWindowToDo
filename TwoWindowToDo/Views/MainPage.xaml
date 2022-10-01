@@ -32,7 +32,7 @@
         </Grid.ColumnDefinitions>
         <ListView x:Name="TodoListView"
            Grid.Row="1"
-            ItemsSource="{x:Bind ViewModel.TodoItems}"
+            ItemsSource="{x:Bind ViewModel.TodoItems, Mode=OneWay}"
             ItemTemplate="{StaticResource TodoLineDataTemplate}"/>
         <Button Grid.Row="2" Command="{x:Bind ViewModel.SaveCommand}" Content="Save List"/>
     </Grid>
