@@ -118,11 +118,11 @@ namespace TwoWindowToDo.ViewModels
         {
             if (string.IsNullOrWhiteSpace(input)) return;
             
-            var tagPattern = @"#([\w_-]+)";
+            var tagPattern = @"#([^\s.。!?\b]+)";
             var tagMatches = Regex.Matches(input, tagPattern);
             var tagList = new List<string>();
 
-            var titlePattern = @"(.+)[.!?]";
+            var titlePattern = @"(.+)[.!?。！？]";
             var titleString = Regex.Match(input, titlePattern).Value;
             if (string.IsNullOrEmpty(titleString)){ titleString = input; }
             titleString = Regex.Replace(titleString, "#", "");
