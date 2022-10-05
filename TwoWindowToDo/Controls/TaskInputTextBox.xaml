@@ -20,6 +20,8 @@
                      Margin="0,1" Height="10"  MinWidth="200" FontSize="18"
                      LosingFocus="TextBox_LosingFocus"
                      Padding="5 0"
+                 AcceptsReturn="False"
+                 
                      FocusEngaged="TaskInputTextBox_FocusEngaged"
                      KeyDown="TaskInputTextBox_KeyDown"
                      />
