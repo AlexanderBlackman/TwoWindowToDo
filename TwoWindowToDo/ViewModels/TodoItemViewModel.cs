@@ -47,7 +47,17 @@ namespace TwoWindowToDo.ViewModels
             }
         }
 
-    public TodoItem ToModel() => new TodoItem{ Title = Title, Content = Content, Urgent = Urgent };
+        public List<string> Tags
+        {
+            get { return TodoItem.stringTag; }
+            set
+            {
+                TodoItem.stringTag = value;
+                RaisePropertyChanged();
+            }
+        }
+
+    public TodoItem ToModel() => new TodoItem{ Title = Title, Content = Content, Urgent = Urgent, stringTag = Tags };
 
         
         

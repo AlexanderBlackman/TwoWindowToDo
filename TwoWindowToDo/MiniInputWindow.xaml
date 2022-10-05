@@ -5,7 +5,7 @@
     xmlns:local="using:TwoWindowToDo"
     xmlns:winex="using:WinUIEx"
     xmlns:g="using:AK.Toolkit.WinUI3.GridExtensions"
-    xmlns:tk="using:CommunityToolkit.WinUI.UI.Controls"
+    xmlns:uc="using:TwoWindowToDo.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
@@ -24,20 +24,8 @@
             </Grid.ColumnDefinitions>
            
 <!--Maybe try having a markdowntblock behind, and make it opaque-->
-            
-            <Grid Grid.Column="1" Margin="0 0">
-                <tk:MarkdownTextBlock Text="{x:Bind ViewModel.TopTodo.Title, Mode=TwoWay}" 
-                                      FontSize="18"
-                                      VerticalAlignment="Center"
-                                      Padding="5 0"/>
-                 <TextBox x:Name="TaskInputTextBox"
-                       VerticalAlignment="Center"   
-                     Margin="0,1" Height="10"  MinWidth="200" FontSize="18"
-                     LosingFocus="TextBox_LosingFocus"
-                     Padding="5 0"
-                     FocusEngaged="TaskInputTextBox_FocusEngaged"
-                     />
-            </Grid>
+            <uc:TaskInputBox Grid.Column="1"  Margin="0 0"  />
+
             <StackPanel Orientation="Horizontal" Grid.Column="2">
 
 

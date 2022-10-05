@@ -1,0 +1,27 @@
+﻿<UserControl
+    x:Class="TwoWindowToDo.Controls.TaskInputBox"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:TwoWindowToDo.Controls"
+    xmlns:tk="using:CommunityToolkit.WinUI.UI.Controls"    
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+
+    <Grid >
+        <tk:MarkdownTextBlock Text="{x:Bind ViewModel.TopTodo.Title, Mode=TwoWay}" 
+                                      FontSize="18"
+                                      VerticalAlignment="Center"
+                                      Padding="5 0"/>
+        <TextBox x:Name="TaskInputTextBox"
+                       VerticalAlignment="Center"   
+                     Margin="0,1" Height="10"  MinWidth="200" FontSize="18"
+                     LosingFocus="TextBox_LosingFocus"
+                     Padding="5 0"
+                     FocusEngaged="TaskInputTextBox_FocusEngaged"
+                     KeyDown="TaskInputTextBox_KeyDown"
+                     />
+    </Grid>
+</UserControl>

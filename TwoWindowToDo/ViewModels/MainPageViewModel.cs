@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 using TwoWindowToDo.Contracts;
+using System.Text.RegularExpressions;
 using TwoWindowToDo.Model;
 using Windows.ApplicationModel.Email.DataProvider;
 
@@ -110,14 +111,50 @@ namespace TwoWindowToDo.ViewModels
             TodoItems.RemoveAt(0);
             TodoItems.Add(temp);
             TopTodo = TodoItems[0];
+            
         }
         
+        public void ProcessInputString(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input)) return;
+            
+            var tagPattern = @"#([\w_-]+)";
+            var tagMatches = Regex.Matches(input, tagPattern);
+            var tagList = new List<string>();
+
+            var titlePattern = @"(.+)[.!?]";
+            var titleString = Regex.Match(input, titlePattern).Value;
+            if (string.IsNullOrEmpty(titleString)){ titleString = input; }
+            titleString = Regex.Replace(titleString, "#", "");
+            titleString = Regex.Replace(titleString, @"\s+", " ");
+
+
+
+            MatchCollection matches = Regex.Matches(input, tagPattern);
+            foreach (Match match in matches)
+            {
+                tagList.Add(match.Value);
+            }
+
+
+
+            TodoItems.Add(new TodoItemViewModel(new TodoItem
+            {
+
+                Title = titleString,
+                Urgent = (input[0] == '!') ? true : false,
+                stringTag = tagList
+            }));
+        }
+
+
+
         public void AddTodo()
         {
-            if (string.IsNullOrWhiteSpace(newTodoTitle)) return;
-            var newTodo = new TodoItemViewModel(new TodoItem { Title = newTodoTitle });
+            ProcessInputString(newTodoTitle);
+            //var newTodo = new TodoItemViewModel(new TodoItem { Title = newTodoTitle });
             //TodoQueue.Enqueue(newTodo);
-            TodoItems.Add(newTodo);
+            //TodoItems.Add(newTodo);
             //selectedTodo = newTodo;
         }
 

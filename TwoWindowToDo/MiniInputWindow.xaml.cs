@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TwoWindowToDo.Controls;
 using TwoWindowToDo.ViewModels;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -87,18 +88,9 @@ namespace TwoWindowToDo
             #endregion
         }
 
-        private void TextBox_LosingFocus(UIElement sender, LosingFocusEventArgs args)
-        {
-            ViewModel.newTodoTitle = TaskInputTextBox.Text;
-            ViewModel.AddTodo();
-            TaskInputTextBox.Text = String.Empty;
-            //TaskInputTextBox.Opacity = 0;
-        }
 
-        private void TaskInputTextBox_FocusEngaged(Control sender, FocusEngagedEventArgs args)
-        {
-            //TaskInputTextBox.Opacity = 1;
-        }
+
+
 
         #region makeWindowDragable
         public event PropertyChangedEventHandler PropertyChanged;
@@ -328,6 +320,9 @@ namespace TwoWindowToDo
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Opacity)));
             }
         }
+
+
+
         public double SetOpacity(ushort? x) => (double)_Opacity;
         public ushort? GetOpacity(double x) => Opacity = (ushort)x;
 
