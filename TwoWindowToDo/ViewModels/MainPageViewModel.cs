@@ -27,6 +27,7 @@ namespace TwoWindowToDo.ViewModels
         public ObservableQueue<TodoItemViewModel> TodoQueue { get; } = new();
 
         [ObservableProperty]
+        [NotifyCanExecuteChangedFor(nameof(DeleteTodoCommand))]
         public TodoItemViewModel selectedTodo;
         [ObservableProperty]
         [NotifyCanExecuteChangedFor(nameof(MarkCompletedCommand))]
@@ -82,12 +83,11 @@ namespace TwoWindowToDo.ViewModels
         {
             CompletedTodos.Add(TopTodo);
             TodoItems.RemoveAt(0);
-            if (TodoItems.Any()) { ; }
-            else
+            if (!TodoItems.Any()) 
             {
-                TodoItems.Add(new TodoItemViewModel(new TodoItem { Title = "Add more tasks" }));
-                TopTodo = TodoItems[0];
+                TodoItems.Add(new TodoItemViewModel(new TodoItem { Title = "Add more tasks" }));               
             }
+            TopTodo = TodoItems[0];
 
             //TodoQueue.Dequeue();
             //if (TodoQueue.Any())
@@ -110,12 +110,16 @@ namespace TwoWindowToDo.ViewModels
             var temp = TodoItems[0];
             TodoItems.RemoveAt(0);
             TodoItems.Add(temp);
-            TopTodo = TodoItems[0];
-            
+            TopTodo = TodoItems[0];            
         }
         
         public void ProcessInputString(string input)
         {
+            /* Prettify the regex with RegexOptions.IgnorePatternWhitespace. 
+             * Add RegexOptions.NonBacktracking after upgrading to .NET 7
+             * OR add a TimeSpan.FromSeconds(1) to the Regex.Match call
+             */
+
             if (string.IsNullOrWhiteSpace(input)) return;
             
             var tagPattern = @"#([^\s.。!?\b]+)";
@@ -157,9 +161,22 @@ namespace TwoWindowToDo.ViewModels
             //TodoItems.Add(newTodo);
             //selectedTodo = newTodo;
         }
-
+        [RelayCommand]
         public void DeleteTodo()
         {
+            if (SelectedTodo is not null)
+            {
+                TodoItems.Remove(SelectedTodo);
+                SelectedTodo = null;
+                if (!TodoItems.Any())                
+                {
+                    TodoItems.Add(new TodoItemViewModel(new TodoItem { Title = "Add more tasks" }));
+                    TopTodo = TodoItems[0];
+                }
+                
+
+
+            }
             //TodoQueue.Dequeue(selectedTodo);
             //if (TodoQueue.Any())
             //{

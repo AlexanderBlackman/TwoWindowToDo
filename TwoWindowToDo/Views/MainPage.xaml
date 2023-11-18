@@ -33,8 +33,16 @@
         <ListView x:Name="TodoListView"
            Grid.Row="1"
             ItemsSource="{x:Bind ViewModel.TodoItems, Mode=OneWay}"
-            ItemTemplate="{StaticResource TodoLineDataTemplate}"/>
-        <Button Grid.Row="2" Command="{x:Bind ViewModel.SaveCommand}" Content="Save List"/>
+            ItemTemplate="{StaticResource TodoLineDataTemplate}"
+            SelectedItem="{x:Bind ViewModel.SelectedTodo, Mode=TwoWay}"/>
+        <ListView x:Name="selectedItemTags" Grid.Column="1" Grid.Row="1"
+                  ItemsSource="{x:Bind ViewModel.SelectedTodo.Tags}"/>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+        <Button  Command="{x:Bind ViewModel.SaveCommand}" Content="Save List"/>
+            <Button  Command="{x:Bind ViewModel.DeleteTodoCommand}" Content="Delete"/>
+        </StackPanel>
+        
     </Grid>
     
 </Page>

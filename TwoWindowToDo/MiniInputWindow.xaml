@@ -10,7 +10,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Height="25"
-    Width="500">
+    Width="700">
 
     <Grid Background="MediumPurple" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" >
         <Grid.RowDefinitions>
